@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class HttpSession implements AutoCloseable {
 	private String host;
-	
+
 	public String getHost() {
 		return host;
 	}
@@ -21,7 +21,7 @@ public class HttpSession implements AutoCloseable {
 	}
 
 	private int port;
-	
+
 	public int getPort() {
 		return port;
 	}
@@ -29,9 +29,9 @@ public class HttpSession implements AutoCloseable {
 	public void setPort(int port) {
 		this.port = port;
 	}
-	
+
 	private String charsetName = "UTF-8";
-	
+
 	public String getCharsetName() {
 		return charsetName;
 	}
@@ -42,17 +42,16 @@ public class HttpSession implements AutoCloseable {
 
 	private Socket socket;
 	private InputStream input;
-	private OutputStream output; 
+	private OutputStream output;
 
-	public HttpSession(String host, int port) 
-			throws UnknownHostException, IOException {
+	public HttpSession(String host, int port) throws UnknownHostException, IOException {
 		this.host = host;
 		this.port = port;
 		socket = new Socket(host, port);
 		input = socket.getInputStream();
 		output = socket.getOutputStream();
 	}
-	
+
 	@Override
 	public void close() throws Exception {
 		if (output != null) {
@@ -68,7 +67,7 @@ public class HttpSession implements AutoCloseable {
 			socket = null;
 		}
 	}
-	
+
 	public void write(String content) throws IOException {
 		if (output == null)
 			throw new IOException("The output stream is closed");
@@ -100,22 +99,24 @@ public class HttpSession implements AutoCloseable {
 			}
 		}
 	}
-	
+
 	public String readHeader() throws IOException {
 		var result = new StringBuffer(512);
 		while (true) {
 			var line = readLine();
-			if (line == null || line.equals("")) break;
+			if (line == null || line.equals(""))
+				break;
 			result.append(line + "\n");
 		}
 		return result.toString();
 	}
-	
+
 	public String readBody(String header) throws IOException {
 		try (var data = new ByteArrayOutputStream(512)) {
 			if (header == null || header.equals(""))
 				header = readHeader();
-			if (Pattern.matches("Transfer-Encoding: chunked", header)) {
+			// System.out.println(header);
+			if (Pattern.compile("Transfer-Encoding: chunked").matcher(header).find()) {
 				while (true) {
 					var len = Integer.parseInt(readLine(), 16);
 					if (len <= 0) {
@@ -124,7 +125,7 @@ public class HttpSession implements AutoCloseable {
 					}
 					var b = new byte[len];
 					var rlen = input.readNBytes(b, 0, len);
-					if (rlen != len) 
+					if (rlen != len)
 						throw new IllegalStateException("Length of data is shorter than expected");
 					data.write(b, 0, rlen);
 					readLine();
@@ -132,24 +133,33 @@ public class HttpSession implements AutoCloseable {
 			} else {
 				var pattern = Pattern.compile("Content-Length: (\\\\d+)");
 				var matcher = pattern.matcher(header);
-				if (matcher.matches()) {
+				if (matcher.find()) {
 					var len = Integer.parseInt(matcher.group(1), 10);
 					if (len > 0) {
 						var b = new byte[len];
 						var rlen = input.readNBytes(b, 0, len);
-						if (rlen != len) 
+						if (rlen != len)
 							throw new IllegalStateException("Length of data is shorter than expected");
 						data.write(b, 0, rlen);
 					}
-				} else 
+				} else
 					throw new UnsupportedOperationException("unsupported transfer mode");
 			}
 			return data.toString(charsetName);
 		}
 	}
-	
-	public byte[] getBytes(String content) throws UnsupportedEncodingException {
-		if (content == null || content.equals("")) return new byte[0]; 
-		return content.getBytes(charsetName);
+
+	public String readBody() throws IOException {
+		return readBody(null);
+	}
+
+	public byte[] getBytes(String content) {
+		if (content == null || content.equals(""))
+			return new byte[0];
+		try {
+			return content.getBytes(charsetName);
+		} catch (UnsupportedEncodingException ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 }

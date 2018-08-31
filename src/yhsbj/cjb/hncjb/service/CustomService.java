@@ -1,11 +1,8 @@
 package yhsbj.cjb.hncjb.service;
 
-import com.google.gson.annotations.Expose;
-
 public class CustomService implements IService {
-	@Expose(serialize = false, deserialize = false)
-	private String id;
-	
+	private transient String id;
+
 	@Override
 	public String Id() {
 		return id;
