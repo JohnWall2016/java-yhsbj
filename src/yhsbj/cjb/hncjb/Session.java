@@ -7,8 +7,6 @@ import java.util.regex.Pattern;
 import yhsbj.cjb.hncjb.service.IService;
 import yhsbj.cjb.hncjb.service.JsonService;
 import yhsbj.cjb.hncjb.service.Result;
-import yhsbj.cjb.hncjb.transaction.Grinfo;
-import yhsbj.cjb.hncjb.transaction.GrinfoQuery;
 import yhsbj.cjb.hncjb.transaction.SysLogin;
 import yhsbj.util.*;
 
@@ -41,7 +39,7 @@ public class Session extends HttpSession {
 		return result;
 	}
 
-	private void send(String seriveContent) throws IOException {
+	void send(String seriveContent) throws IOException {
 		var content = buildSendContent(seriveContent);
 		// System.out.println("send: " + content);
 		write(content);
@@ -97,26 +95,21 @@ public class Session extends HttpSession {
 		return get();
 	}
 
-	public static Session session002() throws UnknownHostException, IOException {
+	public static Session user002() throws UnknownHostException, IOException {
 		return new Session("10.136.6.99", 7010, Config.getValue("user002_id"), Config.getValue("user002_pwd"));
 	}
 
-	public static void main(String[] args) {
-		try (var session = Session.session002()) {
+	public interface Callable {
+		public void call(Session session) throws Exception;
+	}
+
+	public static void user002(Callable call) {
+		try (var session = Session.user002()) {
 			session.login();
-			var query = session.dump(new GrinfoQuery("43031119591225052X"));
-			System.out.format("query: %s\n", query);
-			session.send(query);
-			var rs = session.getResult(Grinfo.class);
-			System.out.format("result: %s\n", rs);
-			System.out.format("datas: %d|%s\n", rs.getDatas().size(), rs.getDatas());
-			if (rs.getDatas().size() > 0) {
-				var data = rs.getDatas().get(0);
-				System.out.format("%s,\n", data.getName());
-			}
+			call.call(session);
 			session.logout();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			new RuntimeException(ex);
 		}
 	}
 }
