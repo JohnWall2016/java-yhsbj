@@ -1,16 +1,14 @@
 package yhsbj.cjb.hncjb;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import yhsbj.cjb.hncjb.transaction.Grinfo;
 import yhsbj.cjb.hncjb.transaction.GrinfoQuery;
 
-class SessionTest {
+public class SessionTest {
 
 	@Test
-	void testSession() {
+	public void testSession() {
 		try (var session = Session.user002()) {
 			session.login();
 			var query = session.dump(new GrinfoQuery("43031119591225052X"));
@@ -30,9 +28,9 @@ class SessionTest {
 	}
 	
 	@Test
-	void TestSession2() {
+	public void TestSession2() {
 		Session.user002(session -> {
-			var query = session.dump(new GrinfoQuery("43031119591225052X"));
+			var query = session.dump(new GrinfoQuery("130503193510300329"));
 			System.out.format("query: %s\n", query);
 			session.send(query);
 			var rs = session.getResult(Grinfo.class);

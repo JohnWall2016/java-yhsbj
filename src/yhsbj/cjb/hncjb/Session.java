@@ -109,7 +109,7 @@ public class Session extends HttpSession {
 			call.call(session);
 			session.logout();
 		} catch (Exception ex) {
-			new RuntimeException(ex);
+			throw new RuntimeException(ex);
 		}
 	}
 }
