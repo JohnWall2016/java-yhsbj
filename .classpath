@@ -12,10 +12,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/gson-2.8.5.jar"/>
-	<classpathentry kind="lib" path="lib/poi-3.17.jar" sourcepath="lib/poi-src-3.17.zip"/>
-	<classpathentry kind="lib" path="lib/poi-ooxml-3.17.jar"/>
-	<classpathentry kind="lib" path="lib/poi-lib/xmlbeans-2.6.0.jar"/>
-	<classpathentry kind="lib" path="lib/poi-lib/commons-collections4-4.1.jar"/>
-	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.17.jar"/>
+	<classpathentry kind="lib" path="lib/poi-4.0.0.jar" sourcepath="lib/poi-src-4.0.0-20180907.zip"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-lib/xmlbeans-3.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/poi-lib/commons-collections4-4.2.jar"/>
+	<classpathentry kind="lib" path="lib/poi-lib/commons-compress-1.18.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

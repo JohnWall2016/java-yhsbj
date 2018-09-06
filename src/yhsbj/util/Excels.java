@@ -50,7 +50,7 @@ public class Excels {
 		for (var idx = srcRow.getFirstCellNum(); idx < srcRow.getPhysicalNumberOfCells(); idx++) {
 			var dstCell = dstRow.createCell(idx);
 			var srcCell = srcRow.getCell(idx);
-			dstCell.setCellType(srcCell.getCellTypeEnum());
+			dstCell.setCellType(srcCell.getCellType());
 			dstCell.setCellStyle(srcCell.getCellStyle());
 			dstCell.setCellValue("");
 		}
