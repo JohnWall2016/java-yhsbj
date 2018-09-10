@@ -2,6 +2,8 @@
 
 import com.google.gson.annotations.SerializedName;
 
+import yhsbj.util.Config;
+
 public class Grinfo {
 	// 个人编号
 	@SerializedName("aac001")
@@ -100,5 +102,9 @@ public class Grinfo {
 
 	public String getCsmc() {
 		return csmc;
+	}
+
+	public String getJbztCN() {
+		return Config.getMapValue("jbzt_map", this.jfzt, this.cbzt);
 	}
 }

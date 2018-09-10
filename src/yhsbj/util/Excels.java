@@ -19,8 +19,7 @@ public class Excels {
 	public static Workbook load(String fileName, Type type) throws IOException {
 		if (type == Type.AUTO) {
 			var fn = fileName.toLowerCase();
-			type = fn.endsWith(".xls") ? Type.XLS :
-				fn.endsWith(".xlsx") ? Type.XLSX : Type.AUTO;
+			type = fn.endsWith(".xls") ? Type.XLS : fn.endsWith(".xlsx") ? Type.XLSX : Type.AUTO;
 		}
 
 		switch (type) {
@@ -32,17 +31,17 @@ public class Excels {
 		}
 		throw new UnsupportedOperationException("Unknown excel type");
 	}
-	
+
 	public static Workbook load(String fileName) throws IOException {
 		return load(fileName, Type.AUTO);
 	}
-	
+
 	public static void save(Workbook wb, String fileName) throws IOException {
 		try (var out = Files.newOutputStream(Paths.get(fileName))) {
 			wb.write(out);
 		}
 	}
-	
+
 	public static Row createRow(Sheet sheet, int dstRowIdx, int srcRowIdx) {
 		var dstRow = sheet.createRow(dstRowIdx);
 		var srcRow = sheet.getRow(srcRowIdx);
@@ -56,9 +55,9 @@ public class Excels {
 		}
 		return dstRow;
 	}
-	
+
 	public static Row getOrCopyRowFrom(Sheet sheet, int dstRowIdx, int srcRowIdx) {
-		if (dstRowIdx <= srcRowIdx) 
+		if (dstRowIdx <= srcRowIdx)
 			return sheet.getRow(srcRowIdx);
 		else {
 			if (sheet.getLastRowNum() >= dstRowIdx)
@@ -66,7 +65,7 @@ public class Excels {
 			return createRow(sheet, dstRowIdx, srcRowIdx);
 		}
 	}
-	
+
 	public static void CopyRowsFrom(Sheet sheet, int start, int count, int srcRowIdx) {
 		sheet.shiftRows(start, sheet.getLastRowNum(), count, true, false);
 		for (var i = 0; i < count; i++) {

@@ -14,5 +14,5 @@ public class Paths {
 		}
 		return newFile;
 	}
-	
+
 }
