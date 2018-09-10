@@ -55,14 +55,14 @@ public class Config {
             map = loadMap(key);
         }
 
-        var subKey = String.join("-", subKeys);
+        var subKey = String.join(hyphenString, subKeys);
         if (map.containsKey(subKey)) {
             return map.get(subKey);
         } else {
             var len = subKeys.length;
             for (var i = 1; i < len; i++) {
-                subKey = String.join("-", Arrays.copyOf(subKeys, len - i));
-                subKey = String.join("-", subKey, wildcardString);
+                subKey = String.join(hyphenString, Arrays.copyOf(subKeys, len - i));
+                subKey = String.join(hyphenString, subKey, wildcardString);
                 if (map.containsKey(subKey)) {
                     return map.get(subKey);
                 }
