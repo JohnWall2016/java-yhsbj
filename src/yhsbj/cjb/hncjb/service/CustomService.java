@@ -4,7 +4,7 @@ public class CustomService implements IService {
     private transient String id;
 
     @Override
-    public String Id() {
+    public String id() {
         return id;
     }
 

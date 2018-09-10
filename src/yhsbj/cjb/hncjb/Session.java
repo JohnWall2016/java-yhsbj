@@ -54,11 +54,11 @@ public class Session extends HttpSession {
     }
 
     public void send(IService service) throws IOException {
-        send(service.Id(), service);
+        send(service.id(), service);
     }
 
     public String dump(IService service) throws IOException {
-        return new JsonService<>(service.Id(), service).setLoginName(userId).setPassword(password).toString();
+        return new JsonService<>(service.id(), service).setLoginName(userId).setPassword(password).toString();
     }
 
     public String get() throws IOException {
