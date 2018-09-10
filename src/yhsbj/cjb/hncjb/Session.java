@@ -96,7 +96,8 @@ public class Session extends HttpSession {
     }
 
     public static Session user002() throws UnknownHostException, IOException {
-        return new Session("10.136.6.99", 7010, Config.getValue("user002_id"), Config.getValue("user002_pwd"));
+        return new Session(Config.getValue("hncjb_ip"), Integer.parseInt(Config.getValue("hncjb_port")),
+                Config.getValue("user002_id"), Config.getValue("user002_pwd"));
     }
 
     public interface Callable {
