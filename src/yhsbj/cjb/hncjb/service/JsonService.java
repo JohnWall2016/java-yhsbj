@@ -6,47 +6,47 @@ import java.util.Objects;
 import com.google.gson.GsonBuilder;
 
 public class JsonService<T> {
-	String serviceid = "";
-	String target = "";
-	String sessionid;
-	String loginname;
-	String password;
+    String serviceid = "";
+    String target = "";
+    String sessionid;
+    String loginname;
+    String password;
 
-	T params;
-	List<T> datas;
+    T params;
+    List<T> datas;
 
-	public String getLoginName() {
-		return loginname;
-	}
+    public String getLoginName() {
+        return loginname;
+    }
 
-	public JsonService<T> setLoginName(String loginname) {
-		this.loginname = loginname;
-		return this;
-	}
+    public JsonService<T> setLoginName(String loginname) {
+        this.loginname = loginname;
+        return this;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public JsonService<T> setPassword(String password) {
-		this.password = password;
-		return this;
-	}
+    public JsonService<T> setPassword(String password) {
+        this.password = password;
+        return this;
+    }
 
-	public JsonService(String serviceId, T params) {
-		Objects.requireNonNull(params);
-		this.serviceid = serviceId;
-		this.params = params;
-		this.datas = List.of(params);
-	}
+    public JsonService(String serviceId, T params) {
+        Objects.requireNonNull(params);
+        this.serviceid = serviceId;
+        this.params = params;
+        this.datas = List.of(params);
+    }
 
-	@SuppressWarnings("unchecked")
-	public static <T> JsonService<T> withoutParams(String serviceId) {
-		return (JsonService<T>) new JsonService<Map<Object, Object>>(serviceId, Map.of());
-	}
+    @SuppressWarnings("unchecked")
+    public static <T> JsonService<T> withoutParams(String serviceId) {
+        return (JsonService<T>) new JsonService<Map<Object, Object>>(serviceId, Map.of());
+    }
 
-	@Override
-	public String toString() {
-		return new GsonBuilder().serializeNulls().create().toJson(this);
-	}
+    @Override
+    public String toString() {
+        return new GsonBuilder().serializeNulls().create().toJson(this);
+    }
 }
