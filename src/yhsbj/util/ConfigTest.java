@@ -10,6 +10,7 @@ public class ConfigTest {
         System.out.println(Config.getMapValue("jbzt_map", "3", "1"));
         System.out.println(Config.getMapValue("jbzt_map", "3", "0"));
         System.out.println(Config.getMapValue("jbzt_map", "0", "1"));
+        System.out.println(Config.getMapValue("xzqh_map", "43030207"));
     }
 
 }

@@ -38,7 +38,7 @@ public class SessionTest {
             System.out.format("datas: %d|%s\n", rs.getDatas().size(), rs.getDatas());
             if (rs.getDatas().size() > 0) {
                 var data = rs.getDatas().get(0);
-                System.out.format("%s %s\n", data.getName(), data.getJbztCN());
+                System.out.format("%s %s %s\n", data.getName(), data.getJbztCN(), data.getDwmc());
             }
         });
     }

@@ -2,7 +2,7 @@
 
 import com.google.gson.annotations.SerializedName;
 
-import yhsbj.util.Config;
+import yhsbj.cjb.hncjb.Configs;
 
 public class Grinfo {
     // 个人编号
@@ -40,9 +40,9 @@ public class Grinfo {
     @SerializedName("aae010")
     String bankcard;
 
-    // 行政区划编码
+    // 村组行政区划编码
     @SerializedName("aaf101")
-    String xzqh;
+    String czqh;
 
     // 村组名称
     @SerializedName("aaf102")
@@ -92,8 +92,8 @@ public class Grinfo {
         return bankcard;
     }
 
-    public String getXzqh() {
-        return xzqh;
+    public String getCzqh() {
+        return czqh;
     }
 
     public String getCzmc() {
@@ -105,6 +105,13 @@ public class Grinfo {
     }
 
     public String getJbztCN() {
-        return Config.getMapValue("jbzt_map", this.jfzt, this.cbzt);
+        return Configs.getJbztCN(this.jfzt, this.cbzt);
+    }
+
+    /**
+     * @return 所属单位名称
+     */
+    public String getDwmc() {
+        return Configs.getXzhqCN(this.czqh.substring(0, 8));
     }
 }
